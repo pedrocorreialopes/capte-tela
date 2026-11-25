@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Internet é necessária apenas para carregar as fontes do app.
+         As capturas nunca são enviadas para servidores. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Botão flutuante sobre outros aplicativos -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Serviço em primeiro plano: mantém o botão ativo (Android 14 exige tipo) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+
+    <!-- Notificação visível enquanto o botão flutuante está ativo -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PrintFacil">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode"
+            android:theme="@style/Theme.PrintFacil">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Serviço que mantém a sobreposição (bolha) e realiza a captura -->
+        <service
+            android:name=".FloatingButtonService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
+
+        <!-- Activity transparente que solicita o consentimento do MediaProjection -->
+        <activity
+            android:name=".ProjectionPermissionActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Transparent" />
+    </application>
+
+</manifest>
