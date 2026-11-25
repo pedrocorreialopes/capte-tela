@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+<title>Print Fácil — captura de tela em um toque</title>
+<meta name="description" content="Print Fácil: botão flutuante para capturar a tela em um único toque, com galeria local privada. Nada é enviado para servidores.">
+<meta name="theme-color" content="#0b0d17" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5f6fb" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Print Fácil">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<div class="app-shell">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.5 4h-5L7.5 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2.5L14.5 4Z"/>
+          <circle cx="12" cy="13" r="3.2"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>Print Fácil</strong>
+        <small>captura de tela</small>
+      </span>
+    </div>
+
+    <div class="status-chip" id="statusChip" data-state="checking" role="status" aria-live="polite">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span id="statusText">Verificando…</span>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ INÍCIO ============ -->
+    <section class="view is-active" id="view-inicio" data-view="inicio" aria-labelledby="titulo-inicio">
+
+      <div class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <span class="hero-badge">100% local · nada sai do aparelho</span>
+        <h1 id="titulo-inicio">Um toque.<br><span class="grad">Print na galeria.</span></h1>
+        <p class="hero-sub">Toque no botão flutuante a qualquer momento — ou use o botão abaixo — para capturar a tela com a autorização da plataforma.</p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-xl" id="btnCapture" type="button">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14.5 4h-5L7.5 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2.5L14.5 4Z"/>
+              <circle cx="12" cy="13" r="3.2"/>
+            </svg>
+            Capturar agora
+          </button>
+          <button class="btn btn-ghost" id="btnPaste" type="button" title="Colar um print copiado na área de transferência">
+            <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="8" y="3" width="8" height="4" rx="1.5"/>
+              <path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/>
+            </svg>
+            Colar print
+          </button>
+        </div>
+
+        <p class="hero-hint" id="heroHint">Dica: arraste o botão flutuante para onde preferir — ele lembra da posição.</p>
+      </div>
+
+      <section class="block" aria-labelledby="titulo-recentes">
+        <div class="block-head">
+          <h2 id="titulo-recentes">Últimas capturas</h2>
+          <button class="link-btn" type="button" data-goto="galeria">Ver galeria</button>
+        </div>
+        <div class="recent-strip" id="recentStrip"></div>
+        <p class="empty-inline" id="recentEmpty">Nenhuma captura ainda. Toque em <strong>Capturar agora</strong> para começar.</p>
+      </section>
+
+      <div class="cards-2">
+        <button class="mini-card" type="button" data-goto="galeria">
+          <span class="mini-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="16" rx="3"/><path d="m6 16 4.2-4.6a1.6 1.6 0 0 1 2.4 0L18 17"/><circle cx="9" cy="9.2" r="1.3"/>
+            </svg>
+          </span>
+          <span class="mini-text"><strong>Minhas Capturas</strong><small id="miniGalleryCount">0 imagens</small></span>
+          <span class="mini-chevron" aria-hidden="true">›</span>
+        </button>
+
+        <button class="mini-card" type="button" data-goto="ajustes">
+          <span class="mini-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.11A1.7 1.7 0 0 0 9 19.32a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.11A1.7 1.7 0 0 0 4.68 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6h.08A1.7 1.7 0 0 0 10.11 3V3a2 2 0 1 1 4 0v.11A1.7 1.7 0 0 0 15.15 4.7a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9v.08a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.11A1.7 1.7 0 0 0 19.4 15Z"/>
+            </svg>
+          </span>
+          <span class="mini-text"><strong>Ajustes</strong><small>Botão, formato e tema</small></span>
+          <span class="mini-chevron" aria-hidden="true">›</span>
+        </button>
+      </div>
+
+      <section class="block" aria-labelledby="titulo-android">
+        <div class="block-head"><h2 id="titulo-android">Botão sobre outros aplicativos</h2></div>
+        <div class="note-card" id="nativeCard">
+          <p><strong>No navegador</strong> a captura usa a API oficial do sistema (<code>getDisplayMedia</code>): você escolhe o que será capturado e autoriza a cada sessão. Uma página web não pode desenhar sobre outros apps nem capturar a tela do sistema livremente.</p>
+          <p><strong>No app Android</strong> (camada nativa Kotlin incluída em <code>docs/android</code>) o botão flutuante vive numa sobreposição <code>SYSTEM_ALERT_WINDOW</code> mantida por um serviço em primeiro plano, e a captura acontece via <code>MediaProjection</code>. O app detecta essa ponte automaticamente.</p>
+          <p class="native-state" id="nativeState">Ponte nativa: não detectada (executando como PWA).</p>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ GALERIA ============ -->
+    <section class="view" id="view-galeria" data-view="galeria" aria-labelledby="titulo-galeria">
+      <div class="block-head sticky-head">
+        <div>
+          <h1 id="titulo-galeria">Minhas Capturas</h1>
+          <p class="head-sub" id="galleryCount">0 imagens</p>
+        </div>
+        <div class="head-actions" id="galleryHeadActions">
+          <button class="btn btn-soft btn-sm" type="button" id="btnSelectMode">Selecionar</button>
+        </div>
+        <div class="head-actions is-hidden" id="gallerySelActions">
+          <button class="btn btn-soft btn-sm" type="button" id="btnSelectAll">Tudo</button>
+          <button class="btn btn-danger btn-sm" type="button" id="btnDeleteSel">Excluir</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="btnCancelSel">Cancelar</button>
+        </div>
+      </div>
+
+      <div class="sel-bar is-hidden" id="selBar">
+        <span id="selCount">0 selecionadas</span>
+        <button class="link-btn" type="button" id="btnShareSel">Compartilhar</button>
+        <button class="link-btn" type="button" id="btnDownloadSel">Baixar</button>
+      </div>
+
+      <div id="galleryGrid" class="gallery"></div>
+
+      <div class="empty-state is-hidden" id="galleryEmpty">
+        <span class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="3"/><path d="m6 16 4.2-4.6a1.6 1.6 0 0 1 2.4 0L18 17"/><circle cx="9" cy="9.2" r="1.3"/>
+          </svg>
+        </span>
+        <h3>Nenhuma captura ainda</h3>
+        <p>Suas capturas ficam salvas só neste aparelho, no armazenamento local do navegador.</p>
+        <button class="btn btn-primary" type="button" data-goto="inicio">Fazer a primeira captura</button>
+      </div>
+    </section>
+
+    <!-- ============ AJUSTES ============ -->
+    <section class="view" id="view-ajustes" data-view="ajustes" aria-labelledby="titulo-ajustes">
+      <div class="block-head"><h1 id="titulo-ajustes">Ajustes</h1></div>
+
+      <div class="setting-card">
+        <div class="setting-row">
+          <div class="setting-label"><strong>Botão flutuante</strong><small>Sempre visível sobre a interface do app</small></div>
+          <label class="switch">
+            <input type="checkbox" id="setFabEnabled" checked>
+            <span class="switch-track" aria-hidden="true"></span>
+            <span class="sr-only">Ativar botão flutuante</span>
+          </label>
+        </div>
+
+        <div class="setting-row column">
+          <div class="setting-label"><strong>Tamanho do botão</strong><small><span id="valSize">60</span> px</small></div>
+          <input type="range" id="setFabSize" min="44" max="88" step="2" value="60">
+        </div>
+
+        <div class="setting-row column">
+          <div class="setting-label"><strong>Transparência</strong><small><span id="valOpacity">100</span>%</small></div>
+          <input type="range" id="setFabOpacity" min="35" max="100" step="1" value="100">
+        </div>
+
+        <div class="setting-row column">
+          <div class="setting-label"><strong>Posição inicial</strong><small>Usada ao redefinir o botão</small></div>
+          <div class="segmented" id="setDotPos" role="group" aria-label="Posição inicial do botão">
+            <button type="button" data-pos="bottom-right" class="is-on">↘ Inf. dir.</button>
+            <button type="button" data-pos="bottom-left">↙ Inf. esq.</button>
+            <button type="button" data-pos="top-right">↗ Sup. dir.</button>
+            <button type="button" data-pos="top-left">↖ Sup. esq.</button>
+          </div>
+          <button class="btn btn-soft btn-sm mt" type="button" id="btnResetFab">Redefinir posição do botão</button>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-label"><strong>Vibração</strong><small>Quando o aparelho suporta</small></div>
+          <label class="switch">
+            <input type="checkbox" id="setVibrate" checked>
+            <span class="switch-track" aria-hidden="true"></span>
+            <span class="sr-only">Ativar vibração</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="setting-card">
+        <div class="setting-row column">
+          <div class="setting-label"><strong>Formato da imagem</strong><small>PNG mantém tudo nítido · JPG ocupa menos</small></div>
+          <div class="segmented" id="setFormat" role="group" aria-label="Formato da imagem">
+            <button type="button" data-format="png" class="is-on">PNG</button>
+            <button type="button" data-format="jpeg">JPG</button>
+          </div>
+        </div>
+
+        <div class="setting-row column" id="qualityRow" hidden>
+          <div class="setting-label"><strong>Qualidade JPG</strong><small><span id="valQuality">90</span>%</small></div>
+          <input type="range" id="setQuality" min="40" max="100" step="5" value="90">
+        </div>
+      </div>
+
+      <div class="setting-card">
+        <div class="setting-row column">
+          <div class="setting-label"><strong>Tema</strong><small>Claro ou escuro</small></div>
+          <div class="segmented" id="setTheme" role="group" aria-label="Tema">
+            <button type="button" data-theme-opt="light">Claro</button>
+            <button type="button" data-theme-opt="dark" class="is-on">Escuro</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-card">
+        <div class="setting-row">
+          <div class="setting-label"><strong>Armazenamento local</strong><small id="storageInfo">Calculando…</small></div>
+          <button class="btn btn-ghost btn-sm" type="button" id="btnInstall">Instalar app</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label"><strong>Privacidade</strong><small>As imagens nunca saem deste aparelho</small></div>
+          <button class="btn btn-danger-soft btn-sm" type="button" id="btnClearAll">Apagar tudo</button>
+        </div>
+      </div>
+
+      <p class="foot-note">Print Fácil · PWA em HTML5, CSS3 e JavaScript puro. Capturas armazenadas em IndexedDB, sem servidor.</p>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Navegação principal">
+    <button type="button" class="tab is-active" data-goto="inicio" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.8"/></svg>
+      <span>Início</span>
+    </button>
+    <button type="button" class="tab" data-goto="galeria">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m6 16 4.2-4.6a1.6 1.6 0 0 1 2.4 0L18 17"/><circle cx="9" cy="9.2" r="1.3"/></svg>
+      <span>Galeria</span>
+    </button>
+    <button type="button" class="tab" data-goto="ajustes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2m0 14v2M4.2 7.5l1.7 1M18.1 15.5l1.7 1M4.2 16.5l1.7-1M18.1 8.5l1.7-1"/></svg>
+      <span>Ajustes</span>
+    </button>
+  </nav>
+</div>
+
+<!-- Botão flutuante global -->
+<button class="fab" id="fab" type="button" aria-label="Capturar tela agora" title="Capturar tela">
+  <span class="fab-ring" aria-hidden="true"></span>
+  <svg class="fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M14.5 4h-5L7.5 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2.5L14.5 4Z"/>
+    <circle cx="12" cy="13" r="3.2"/>
+  </svg>
+  <span class="fab-grip" aria-hidden="true"></span>
+</button>
+
+<!-- Overlay de captura em andamento -->
+<div class="capture-overlay" id="captureOverlay" hidden>
+  <div class="capture-card" role="alertdialog" aria-live="assertive" aria-labelledby="captureTitle">
+    <div class="capture-spinner" id="captureSpinner" aria-hidden="true"></div>
+    <h2 id="captureTitle">Preparando captura…</h2>
+    <p id="captureMsg">Autorize o compartilhamento da tela na janela do sistema.</p>
+    <button class="btn btn-ghost btn-sm" type="button" id="btnCaptureCancel">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal de prévia -->
+<div class="modal" id="previewModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel modal-wide" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+    <div class="modal-head">
+      <h2 id="previewTitle">Prévia da captura</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Fechar prévia">✕</button>
+    </div>
+    <div class="modal-body preview-body">
+      <div class="preview-frame"><img id="previewImg" alt="Prévia da captura de tela"></div>
+      <p class="preview-meta" id="previewMeta"></p>
+    </div>
+    <div class="modal-foot preview-foot">
+      <button class="btn btn-primary" type="button" id="btnSavePreview">Salvar em Minhas Capturas</button>
+      <button class="btn btn-soft" type="button" id="btnSharePreview">Compartilhar</button>
+      <button class="btn btn-soft" type="button" id="btnDownloadPreview">Baixar</button>
+      <button class="btn btn-danger-soft" type="button" id="btnDiscardPreview">Descartar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Visualizador tela cheia -->
+<div class="modal viewer" id="viewerModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="viewer-panel" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+    <div class="viewer-head">
+      <div>
+        <h2 id="viewerTitle">Captura</h2>
+        <p class="head-sub" id="viewerMeta"></p>
+      </div>
+      <button class="icon-btn light" type="button" data-close aria-label="Fechar visualização">✕</button>
+    </div>
+    <div class="viewer-stage">
+      <button class="nav-arrow prev" type="button" id="viewerPrev" aria-label="Captura anterior">‹</button>
+      <img id="viewerImg" alt="Captura de tela em tela cheia">
+      <button class="nav-arrow next" type="button" id="viewerNext" aria-label="Próxima captura">›</button>
+    </div>
+    <div class="viewer-foot">
+      <button class="btn btn-soft btn-sm" type="button" id="viewerShare">Compartilhar</button>
+      <button class="btn btn-soft btn-sm" type="button" id="viewerDownload">Baixar</button>
+      <button class="btn btn-danger-soft btn-sm" type="button" id="viewerDelete">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmação -->
+<div class="modal" id="confirmModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel modal-narrow" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal-head"><h2 id="confirmTitle">Confirmar</h2></div>
+    <div class="modal-body"><p id="confirmMsg"></p></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" type="button" data-close>Cancelar</button>
+      <button class="btn btn-danger" type="button" id="confirmYes">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script src="js/db.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/native.js"></script>
+<script src="js/capture.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/fab.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

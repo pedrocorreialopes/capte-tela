@@ -1,0 +1,41 @@
+{
+  "name": "Print Fácil — captura de tela",
+  "short_name": "Print Fácil",
+  "description": "Capture a tela em um toque com o botão flutuante. Galeria privada, 100% local.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#080a13",
+  "theme_color": "#080a13",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Capturar agora",
+      "short_name": "Capturar",
+      "url": "./index.html#inicio"
+    },
+    {
+      "name": "Minhas Capturas",
+      "short_name": "Galeria",
+      "url": "./index.html#galeria"
+    }
+  ]
+}
