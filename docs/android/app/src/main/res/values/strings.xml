@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Print Fácil</string>
+
+    <string name="notif_channel">Botão flutuante</string>
+    <string name="notif_channel_desc">Mantém o botão de captura ativo sobre outros aplicativos.</string>
+    <string name="notif_title">Print Fácil ativo</string>
+    <string name="notif_text">Toque na bolha para capturar a tela.</string>
+    <string name="notif_stop">Desativar</string>
+
+    <string name="overlay_granted">Pronto! O botão aparecerá sobre outros aplicativos.</string>
+    <string name="overlay_denied">Permissão de sobreposição negada.</string>
+    <string name="floating_started">Botão flutuante ativado.</string>
+    <string name="floating_stopped">Botão flutuante desativado.</string>
+    <string name="projection_denied">Captura não autorizada.</string>
+    <string name="capture_ready">Captura realizada.</string>
+</resources>
